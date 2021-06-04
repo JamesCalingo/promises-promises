@@ -1,4 +1,7 @@
-const promiseHandler = require("../promiseHandler");
+
+const APromise = require("../promiseHandler");
+
+describe("Promise constructor", () => {
 
 it("receives an executor functionwhen constructed which is immediately called", () => {
   const executor = jest.fn();
@@ -28,3 +31,5 @@ it("transitions to REJECTED state with a 'reason'", () => {
   });
   expect(promise.state).toBe("REJECTED");
 });
+
+})
