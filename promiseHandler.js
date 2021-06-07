@@ -17,6 +17,9 @@ class APromise {
 }
 
 function handle(promise, handler) {
+  while (promise.value instanceof APromise) {
+    promise = promise.value;
+  }
   if (promise.state === PENDING) {
     promise.queue.push(handler);
   } else {
@@ -27,12 +30,12 @@ function handle(promise, handler) {
 function handleResolved(promise, handler) {
   const cb =
     promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
-try {
-  const value = cb(promise.value)
-  fulfill(handler.promise, value)
-} catch(err) {
-  reject(handler.promise, err)
-}
+  try {
+    const value = cb(promise.value);
+    fulfill(handler.promise, value);
+  } catch (err) {
+    reject(handler.promise, err);
+  }
 }
 
 function fulfill(promise, value) {
