@@ -5,46 +5,52 @@ const REJECTED = "REJECTED";
 class APromise {
   constructor(executor) {
     this.state = PENDING;
-    this.queue = []
+    this.queue = [];
     doResolve(this, executor);
   }
 
   then(onFulfilled, onRejected) {
-    const promise = new APromise(() => {})
-    handle(this, { onFulfilled, onRejected });
-    return promise
+    const promise = new APromise(() => {});
+    handle(this, { promise, onFulfilled, onRejected });
+    return promise;
   }
 }
 
 function handle(promise, handler) {
-  if(promise.state === PENDING) {
-    promise.queue.push(handler)
-  }else {
-    handleResolved(promise, handler)
+  if (promise.state === PENDING) {
+    promise.queue.push(handler);
+  } else {
+    handleResolved(promise, handler);
   }
 }
 
 function handleResolved(promise, handler) {
-  const cb = promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
-  cb(promise.value);
+  const cb =
+    promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
+try {
+  const value = cb(promise.value)
+  fulfill(handler.promise, value)
+} catch(err) {
+  reject(handler.promise, err)
+}
 }
 
 function fulfill(promise, value) {
   promise.state = FULFILLED;
   promise.value = value;
-  finale(promise)
+  finale(promise);
 }
 
 function reject(promise, reason) {
   promise.state = REJECTED;
   promise.value = reason;
-  finale(promise)
+  finale(promise);
 }
 
 function finale(promise) {
-  const length = promise.queue.length
-  for(let i = 0; i < length; i++) {
-    handle(promise, promise.queue[i])
+  const length = promise.queue.length;
+  for (let i = 0; i < length; i++) {
+    handle(promise, promise.queue[i]);
   }
 }
 
