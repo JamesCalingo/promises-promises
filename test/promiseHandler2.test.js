@@ -8,7 +8,7 @@ it("should have a .then method", () => {
 })
 
 it("should call the onFulfilled method when a promise is in a FULFILLED state", () => {
-  const value = "NOT NULL";
+  const value = "YOUR DATA, NOT NULL";
   const onFulfilled = jest.fn()
   const promise = new APromise((fulfill, reject) => {
     fulfill(value)
@@ -19,7 +19,7 @@ it("should call the onFulfilled method when a promise is in a FULFILLED state", 
 })
 
 it("transitions to the REJECTED state with a 'reason'", () => {
-  const reason = "some error occured";
+  const reason = "Some error occured";
   const onRejected = jest.fn();
   const promise = new APromise((fulfill, reject) => {
     reject(reason)

@@ -15,7 +15,7 @@ describe("Promise constructor", () => {
   });
 
   it("transitions to RESOLVED state with 'value'", () => {
-    const value = "promise resolved";
+    const value = "YOUR DATA, NOT NULL";
     const promise = new APromise((fulfill, reject) => {
       fulfill(value);
     });
@@ -23,7 +23,7 @@ describe("Promise constructor", () => {
   });
 
   it("transitions to REJECTED state with a 'reason'", () => {
-    const reason = "some error occured";
+    const reason = "Some error occured";
     const promise = new APromise((resolve, reject) => {
       reject(reason);
     });

@@ -5,27 +5,45 @@ const REJECTED = "REJECTED";
 class APromise {
   constructor(executor) {
     this.state = PENDING;
+    this.queue = []
     doResolve(this, executor);
   }
 
   then(onFulfilled, onRejected) {
-    handleResolved(this, onFulfilled, onRejected);
+    handle(this, { onFulfilled, onRejected });
   }
 }
 
-function handleResolved(promise, onFulfilled, onRejected) {
-  const cb = promise.state === FULFILLED ? onFulfilled : onRejected;
+function handle(promise, handler) {
+  if(promise.state === PENDING) {
+    promise.queue.push(handler)
+  }else {
+    handleResolved(promise, handler)
+  }
+}
+
+function handleResolved(promise, handler) {
+  const cb = promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
   cb(promise.value);
 }
 
 function fulfill(promise, value) {
   promise.state = FULFILLED;
   promise.value = value;
+  finale(promise)
 }
 
 function reject(promise, reason) {
   promise.state = REJECTED;
   promise.value = reason;
+  finale(promise)
+}
+
+function finale(promise) {
+  const length = promise.queue.length
+  for(let i = 0; i < length; i++) {
+    handle(promise, promise.queue[i])
+  }
 }
 
 function doResolve(promise, executor) {

@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler");
 const value = "YOUR DATA, NOT NULL"
-const reason = "NOT YOUR DATA. Some error occured."
+const reason = "Some error occured"
 
 describe("Promise constructor", () => {
 

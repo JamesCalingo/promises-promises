@@ -2,7 +2,7 @@ const APromise = require("../promiseHandler");
 
 describe("handling executor errors", () => {
   it("should transition to the REJECTED state if the executor fails", () => {
-    const reason = new Error("Some error occured. whoopsie!");
+    const reason = new Error("Some error occured");
     const onRejected = jest.fn();
     const promise = new APromise((resolve, reject) => {
       throw reason;
