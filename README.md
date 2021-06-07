@@ -16,6 +16,8 @@ What's more, this implementation is done with Test-Driven Development (TDD). Aut
 
 I've attempted to dabble in writing tests before, but going back to old projects and adding tests hasn't been the easiest thing to do. I'm hoping that by doing this, I can go back to my old projects and maybe figure out how to cover them in tests.
 
+I used [This blog post](https://www.mauriciopoppe.com/notes/computer-science/computation/promises/#) as a guide for this project.
+
 # Technology
 
 This is almost pure JS, with Jest as my testing library.
