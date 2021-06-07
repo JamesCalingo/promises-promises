@@ -10,7 +10,9 @@ class APromise {
   }
 
   then(onFulfilled, onRejected) {
+    const promise = new APromise(() => {})
     handle(this, { onFulfilled, onRejected });
+    return promise
   }
 }
 
