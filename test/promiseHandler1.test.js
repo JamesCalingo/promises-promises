@@ -1,4 +1,3 @@
-
 const APromise = require("../promiseHandler");
 
 describe("Promise constructor", () => {
@@ -12,16 +11,16 @@ it("receives an executor functionwhen constructed which is immediately called", 
 });
 
 it("is in a PENDING state", () => {
-  const promise = new APromise(function executor(resolve, reject) {});
+  const promise = new APromise(function executor(fulfill, reject) {});
   expect(promise.state).toBe("PENDING");
 });
 
 it("transitions to RESOLVED state with 'value'", () => {
   const value = "promise resolved";
-  const promise = new APromise((resolve, reject) => {
-    resolve(value);
+  const promise = new APromise((fulfill, reject) => {
+    fulfill(value);
   });
-  expect(promise.state).toBe("RESOLVED");
+  expect(promise.state).toBe("FULFILLED");
 });
 
 it("transitions to REJECTED state with a 'reason'", () => {
