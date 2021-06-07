@@ -29,11 +29,17 @@ function reject(promise, reason) {
 }
 
 function doResolve(promise, executor) {
+  let called = false
+
   function wrapFulfill(value) {
+    if(called) return
+    called = true
     fulfill(promise, value);
   }
 
   function wrapReject(reason) {
+    if(called) return
+    called = true
     reject(promise, reason);
   }
 
