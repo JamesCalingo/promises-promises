@@ -29,21 +29,25 @@ function reject(promise, reason) {
 }
 
 function doResolve(promise, executor) {
-  let called = false
+  let called = false;
 
   function wrapFulfill(value) {
-    if(called) return
-    called = true
+    if (called) return;
+    called = true;
     fulfill(promise, value);
   }
 
   function wrapReject(reason) {
-    if(called) return
-    called = true
+    if (called) return;
+    called = true;
     reject(promise, reason);
   }
 
-  executor(wrapFulfill, wrapReject);
+  try {
+    executor(wrapFulfill, wrapReject);
+  } catch (err) {
+    wrapReject(err);
+  }
 }
 
 module.exports = APromise;
