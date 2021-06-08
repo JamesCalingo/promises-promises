@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler")
 
-describe("Promise constructor", () => {
+describe("Observing changes in state of promise with '.then'", () => {
 
 it("should have a .then method", () => {
   const promise = new APromise(() => {})

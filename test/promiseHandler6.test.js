@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler");
 
-describe("Chaining promises", () => {
+describe("Chaining multiple promises", () => {
   it("the .then method should return a new promise", () => {
     expect(function () {
       const qOnFulfilled = jest.fn();

@@ -30,6 +30,15 @@ function handle(promise, handler) {
 function handleResolved(promise, handler) {
   const cb =
     promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
+
+    if(typeof cb !== "function") {
+      if(promise.state === FULFILLED) {
+        fulfill(handler.promise, promise.value)
+      }else {
+        reject(handler.promise, promise.value)
+      }
+      return
+    }
   try {
     const value = cb(promise.value);
     fulfill(handler.promise, value);

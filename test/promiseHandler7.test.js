@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler");
 
-describe("Async handlers", () => {
+describe("Asynchronous handlers with chained promises", () => {
   it("if a handler returns a promise, the previous promise should adopt the state of the returned promise", () => {
     const value = "YOUR DATA, NOT NULL";
     const fn1 = jest.fn();

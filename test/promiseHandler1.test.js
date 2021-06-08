@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler");
 
-describe("Promise constructor", () => {
+describe("Promise constructor with basic states", () => {
   it("receives an executor functionwhen constructed which is immediately called", () => {
     const executor = jest.fn();
     const promise = new APromise(executor);

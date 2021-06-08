@@ -1,6 +1,6 @@
 const APromise = require("../promiseHandler");
 
-describe("Async executor", () => {
+describe("Asynchronous executor functions", () => {
   it("should queue callbacks when the promise is not fulfilled immediately", (done) => {
     const value = "YOUR DATA, NOT NULL";
     const promise = new APromise((fulfill, reject) => {

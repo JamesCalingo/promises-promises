@@ -2,7 +2,7 @@ const APromise = require("../promiseHandler");
 const value = "YOUR DATA, NOT NULL"
 const reason = "Some error occured"
 
-describe("Promise constructor", () => {
+describe("Ensuring that promises do not change state on resolve", () => {
 
   it("should not be rejected with another value if promise is fulfilled", () => {
     const onFulfilled = jest.fn()
