@@ -90,4 +90,23 @@ describe("Other important considerations for promises", () => {
       }, 10)
     })
   })
+
+  describe("Thenables", () => {
+    it("should work with thenables", done => {
+      const value = "YOUR DATA, NOT NULL"
+      const thenable = {
+        then:fulfill => fulfill(value)
+      }
+      const f1 = jest.fn()
+      new APromise(fulfill => fulfill(value))
+      .then(() => thenable)
+      .then(f1)
+
+      setTimeout(function() {
+        expect(f1.mock.calls.length).toBe(1)
+        expect(f1.mock.calls[0][0]).toBe(value)
+        done()
+      }, 10)
+    })
+  })
 });

@@ -54,6 +54,27 @@ function fulfill(promise, value) {
   if (value === promise) {
     return reject(promise, new TypeError())
   }
+
+if(value &&(typeof value === "object" || typeof value === "function")) {
+  let then
+  try {
+    then = value.then
+  } catch(err) {
+    return reject(promise, err)
+  }
+
+  if(then === promise.then && promise instanceof APromise) {
+    promise.state = FULFILLED
+    promise.value = value
+    return finale(promise)
+  }
+
+  if(typeof then === "function") {
+    return doResolve(promise, then.bind(value))
+  }
+}
+
+
   promise.state = FULFILLED;
   promise.value = value;
   finale(promise);
