@@ -28,52 +28,50 @@ function handle(promise, handler) {
 }
 
 function handleResolved(promise, handler) {
-setTimeout(() => {
-  const cb =
-    promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
+  setTimeout(() => {
+    const cb =
+      promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
 
-    if(typeof cb !== "function") {
-      if(promise.state === FULFILLED) {
-        fulfill(handler.promise, promise.value)
-      }else {
-        reject(handler.promise, promise.value)
+    if (typeof cb !== "function") {
+      if (promise.state === FULFILLED) {
+        fulfill(handler.promise, promise.value);
+      } else {
+        reject(handler.promise, promise.value);
       }
-      return
+      return;
     }
-  try {
-    const value = cb(promise.value);
-    fulfill(handler.promise, value);
-  } catch (err) {
-    reject(handler.promise, err);
-  }
-})
-
+    try {
+      const value = cb(promise.value);
+      fulfill(handler.promise, value);
+    } catch (err) {
+      reject(handler.promise, err);
+    }
+  });
 }
 
 function fulfill(promise, value) {
   if (value === promise) {
-    return reject(promise, new TypeError())
+    return reject(promise, new TypeError());
   }
 
-if(value &&(typeof value === "object" || typeof value === "function")) {
-  let then
-  try {
-    then = value.then
-  } catch(err) {
-    return reject(promise, err)
-  }
+  if (value && (typeof value === "object" || typeof value === "function")) {
+    let then;
+    try {
+      then = value.then;
+    } catch (err) {
+      return reject(promise, err);
+    }
 
-  if(then === promise.then && promise instanceof APromise) {
-    promise.state = FULFILLED
-    promise.value = value
-    return finale(promise)
-  }
+    if (then === promise.then && promise instanceof APromise) {
+      promise.state = FULFILLED;
+      promise.value = value;
+      return finale(promise);
+    }
 
-  if(typeof then === "function") {
-    return doResolve(promise, then.bind(value))
+    if (typeof then === "function") {
+      return doResolve(promise, then.bind(value));
+    }
   }
-}
-
 
   promise.state = FULFILLED;
   promise.value = value;
