@@ -17,7 +17,7 @@ class APromise {
 }
 
 function handle(promise, handler) {
-  while (promise.value instanceof APromise) {
+  while (promise.state !== REJECTED && promise.value instanceof APromise) {
     promise = promise.value;
   }
   if (promise.state === PENDING) {
@@ -28,6 +28,7 @@ function handle(promise, handler) {
 }
 
 function handleResolved(promise, handler) {
+setTimeout(() => {
   const cb =
     promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
 
@@ -45,9 +46,14 @@ function handleResolved(promise, handler) {
   } catch (err) {
     reject(handler.promise, err);
   }
+})
+
 }
 
 function fulfill(promise, value) {
+  if (value === promise) {
+    return reject(promise, new TypeError())
+  }
   promise.state = FULFILLED;
   promise.value = value;
   finale(promise);
