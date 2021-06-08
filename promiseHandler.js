@@ -28,6 +28,7 @@ function handle(promise, handler) {
 }
 
 function handleResolved(promise, handler) {
+  // The tutorial uses SetImmediate for this, but that causes ReferenceErrors in Jest...
   setTimeout(() => {
     const cb =
       promise.state === FULFILLED ? handler.onFulfilled : handler.onRejected;
